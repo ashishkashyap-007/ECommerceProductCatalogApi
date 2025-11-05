@@ -1,6 +1,7 @@
 package com.ashish.ecommerce.model;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
@@ -9,8 +10,7 @@ import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "product")
-@NoArgsConstructor
-@RequiredArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +27,12 @@ public class Product {
     private OffsetDateTime createdAt = OffsetDateTime.now();
     @Column(name = "updated_at")
     private OffsetDateTime updatedAt;
+
+    public Product(String name, BigDecimal price) {
+        this.name = name;
+        this.price = price;
+        this.createdAt = OffsetDateTime.now();
+    }
 
     // Getters and Setters
     public Long getId() {

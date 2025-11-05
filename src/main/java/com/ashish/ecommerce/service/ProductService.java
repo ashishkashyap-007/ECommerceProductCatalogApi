@@ -3,7 +3,6 @@ package com.ashish.ecommerce.service;
 import com.ashish.ecommerce.model.Product;
 import com.ashish.ecommerce.repository.ProductRepository;
 import com.ashish.ecommerce.specification.ProductSpecification;
-import org.hibernate.validator.internal.constraintvalidators.bv.number.bound.decimal.DecimalMaxValidatorForShort;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,7 +19,7 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    public ProductService(ProductRepository productRepository, DecimalMaxValidatorForShort decimalMaxValidatorForShort) {
+    public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
