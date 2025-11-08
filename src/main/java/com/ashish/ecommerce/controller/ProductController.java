@@ -38,7 +38,7 @@ public class ProductController {
         return productService.getProducts(category, search, minPrice, maxPrice, page, size, sortObj);
     }
 
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
         return productService.getById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -48,13 +48,13 @@ public class ProductController {
         Product createdProduct = productService.create(product);
         return ResponseEntity.created(URI.create("/products/" + createdProduct.getId())).body(createdProduct);
     }
-    @PutMapping("/id")
+    @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product product) {
         return productService.update(id, product)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
-    @DeleteMapping("/id")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         boolean deleted = productService.delete(id);
         return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();

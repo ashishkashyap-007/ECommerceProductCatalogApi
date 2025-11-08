@@ -100,7 +100,65 @@ Cursor (keyset) pagination (optional advanced mode)
 
 ---
 
-## Data model (high level)
+## Quick cURL examples
+
+Copy-paste into your terminal or import into Postman as cURL. Base URL: http://localhost:8080
+
+Create product
+curl --location "http://localhost:8080/api/v1/products" \
+  --header "Content-Type: application/json" \
+  --header "Accept: application/json" \
+  --data '{
+    "name": "Test Phone X",
+    "description": "Sample phone for testing",
+    "price": 299.99,
+    "available": true,
+    "category": "electronics"
+  }'
+
+Get product by id
+curl --location "http://localhost:8080/api/v1/products/31" \
+  --header "Accept: application/json"
+
+Update product (PUT)
+curl --location --request PUT "http://localhost:8080/api/v1/products/31" \
+  --header "Content-Type: application/json" \
+  --header "Accept: application/json" \
+  --data '{
+    "name": "Test Phone X - Updated",
+    "description": "Updated description",
+    "price": 279.99,
+    "available": true,
+    "category": "electronics"
+  }'
+
+Delete product
+curl --location --request DELETE "http://localhost:8080/api/v1/products/1" \
+  --header "Accept: application/json"
+
+List products (default)
+curl --location "http://localhost:8080/api/v1/products" \
+  --header "Accept: application/json"
+
+List with pagination
+curl --location "http://localhost:8080/api/v1/products?page=1&size=10" \
+  --header "Accept: application/json"
+
+List with sorting (price desc)
+curl --location "http://localhost:8080/api/v1/products?page=0&size=10&sort=price%2Cdesc" \
+  --header "Accept: application/json"
+
+Filter by name and price range
+curl --location "http://localhost:8080/api/v1/products?name=phone&minPrice=300&maxPrice=500&page=0&size=20" \
+  --header "Accept: application/json"
+
+Filter by availability and category
+curl --location "http://localhost:8080/api/v1/products?available=true&category=electronics" \
+  --header "Accept: application/json"
+
+---
+
+## Data model
 
 Product (suggested fields):
 - id: BIGSERIAL (Long)
@@ -115,7 +173,7 @@ Flyway migration files in `src/main/resources/db/migration` create the table and
 
 ---
 
-## Implementation notes (concise)
+## Implementation notes
 
 - Repository
   - `ProductRepository extends JpaRepository<Product, Long> & JpaSpecificationExecutor<Product>`
@@ -165,7 +223,7 @@ Flyway will run automatically on startup and apply migrations from `src/main/res
 
 ---
 
-## Tests and acceptance criteria (what to validate)
+## Tests and acceptance criteria
 
 Minimal verification to consider this POC successful:
 - CRUD operations work and validation errors are returned for invalid requests
@@ -182,7 +240,7 @@ Tests to implement:
 
 ---
 
-## Suggested next improvements (pick one or more as follow-ups)
+## Future enhancements
 
 - Implement cursor/keyset pagination and demonstrate performance vs offset
 - Add PostgreSQL full-text search and a GIN index; measure relevance and latency
